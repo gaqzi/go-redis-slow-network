@@ -1,0 +1,22 @@
+version: '3.5'
+
+services:
+  slow_redis:
+    build:
+      context: .
+      dockerfile: Dockerfile.redis
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 6379:6379
+
+  client:
+    depends_on:
+      - slow_redis
+
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+
+    environment:
+      REDIS_ADDR: "slow_redis:6379"

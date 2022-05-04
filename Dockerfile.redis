@@ -1,0 +1,6 @@
+FROM ubuntu:20.04
+WORKDIR /work
+RUN apt-get update && \
+    apt-get install iproute2 iputils-ping redis -y
+
+CMD ["redis-server", "--protected-mode", "no"]
